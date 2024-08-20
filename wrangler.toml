@@ -1,0 +1,11 @@
+name = "ai-chatbot"
+type = "javascript"
+
+account_id = "b31ab099f0b39db458f990d01f168c85"
+workers_dev = true
+compatibility_date = "2023-10-01"
+
+main = "dist/worker.js"  # エントリーポイントを指定
+
+[build]
+command = "npm run build"
