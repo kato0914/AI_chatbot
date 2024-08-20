@@ -31,6 +31,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = await response.json();
     res.status(200).json(data);
   } catch (error: any) { // 'error' の型を 'any' に指定
-    res.status(500).json({ error: (error as Error).message });
+    res.status(500).json({ error: error.message });
   }
 }
