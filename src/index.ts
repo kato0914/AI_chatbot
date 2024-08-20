@@ -11,26 +11,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method !== 'GET') {
-    return res.status(405).send('Method not allowed');
-  }
-
-  try {
-    const response = await fetch(`https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/dns_records`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch DNS records');
-    }
-
-    const data = await response.json();
-    res.status(200).json(data);
-  } catch (error: any) { // 'error' の型を 'any' に指定
-    res.status(500).json({ error: error.message });
+  if (req.method === 'POST') {
+    const { message } = req.body;
+    res.status(200).json({ reply: `You said: ${message}` });
+  } else {
+    res.status(405).send('Method not allowed');
   }
 }
