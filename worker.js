@@ -1,22 +1,21 @@
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+export default {
+  async fetch(request, env) {
+    if (request.method === 'POST') {
+      const { message } = await request.json();
+      
+      // Cloudflare AI機能を使用してレスポンスを生成
+      const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+        messages: [{ role: 'user', content: message }]
+      });
 
-async function handleRequest(request) {
-  if (request.method === 'POST') {
-    const { message } = await request.json()
-    
-    // ここでAIモデルとの対話処理を実装します
-    // この例では、簡単なエコーレスポンスを返します
-    const response = { reply: `AIからの応答: "${message}"` }
-    
-    return new Response(JSON.stringify(response), {
-      headers: { 
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
+      return new Response(JSON.stringify({ reply: response.response }), {
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
+
+    return new Response('This endpoint only accepts POST requests', { status: 405 });
   }
-
-  return new Response('このエンドポイントはPOSTリクエストのみを受け付けます', { status: 405 })
-}
+};
