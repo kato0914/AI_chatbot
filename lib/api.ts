@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL || 'https://api.cloudflare.com/client/v4';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.cloudflare.com/client/v4';
 
 export async function sendMessage(message: string) {
   if (!API_URL) {
