@@ -7,7 +7,7 @@ const ChatInterface = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await sendMessage();
+      const response = await sendMessage(message);
       console.log(response);
     } catch (error) {
       console.error('Error sending message:', error);
