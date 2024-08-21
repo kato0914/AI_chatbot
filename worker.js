@@ -1,5 +1,19 @@
 export default {
   async fetch(request, env) {
+    // CORSヘッダーを設定する関数
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': 'https://ai-chatbot-dw16.vercel.app',
+      'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    // プリフライトリクエスト（OPTIONS）に対応
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        headers: corsHeaders
+      });
+    }
+
     if (request.method === 'POST') {
       const { message } = await request.json();
       

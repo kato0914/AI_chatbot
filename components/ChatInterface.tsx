@@ -15,6 +15,7 @@ const ChatInterface = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message }),
+        mode: 'cors', // CORSモードを明示的に指定
       });
 
       if (!res.ok) {
