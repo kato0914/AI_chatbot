@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WORKER_URL = process.env.NEXT_PUBLIC_WORKER_URL || 'https://your-worker.your-subdomain.workers.dev';
+const WORKER_URL = process.env.NEXT_PUBLIC_WORKER_URL || 'https://ai-chatbot.katoj62.workers.dev';
 
 const ChatInterface = () => {
   const [message, setMessage] = useState('');

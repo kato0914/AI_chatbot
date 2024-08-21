@@ -1,13 +1,13 @@
 export default {
   async fetch(request, env) {
-    // CORSヘッダーを設定する関数
     const corsHeaders = {
       'Access-Control-Allow-Origin': 'https://ai-chatbot-dw16.vercel.app',
       'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
     };
 
-    // プリフライトリクエスト（OPTIONS）に対応
+    // OPTIONSリクエストに対する処理を追加
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         headers: corsHeaders
@@ -25,11 +25,14 @@ export default {
       return new Response(JSON.stringify({ reply: response.response }), {
         headers: { 
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          ...corsHeaders,
         },
       });
     }
 
-    return new Response('This endpoint only accepts POST requests', { status: 405 });
+    return new Response('This endpoint only accepts POST requests', { 
+      status: 405,
+      headers: corsHeaders
+    });
   }
 };
